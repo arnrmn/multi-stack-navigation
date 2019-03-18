@@ -7,19 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/firstContainer"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <com.arnrmn.nav.MultiNavContainer
+        android:id="@+id/multiNavContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="false"/>
-
-    <fragment
-        android:id="@+id/secondContainer"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="false"/>
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationBar"

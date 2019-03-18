@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/two">
+
+    <fragment
+        android:id="@+id/two"
+        android:name="com.arnrmn.navigation.SecondFragment"
+        android:label="fragment_two"
+        tools:layout="@layout/fragment_second"/>
+
+    <fragment
+        android:id="@+id/details"
+        android:name="com.arnrmn.navigation.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="parent"
+            app:argType="string"/>
+        <argument
+            android:name="level"
+            app:argType="integer"/>
+    </fragment>
+
+    <action
+        android:id="@+id/toDetails"
+        app:destination="@id/details"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+
+</navigation>

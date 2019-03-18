@@ -13,12 +13,6 @@
         tools:layout="@layout/fragment_first"/>
 
     <fragment
-        android:id="@+id/two"
-        android:name="com.arnrmn.navigation.SecondFragment"
-        android:label="fragment_two"
-        tools:layout="@layout/fragment_second"/>
-
-    <fragment
         android:id="@+id/details"
         android:name="com.arnrmn.navigation.DetailsFragment"
         android:label="fragment_details"

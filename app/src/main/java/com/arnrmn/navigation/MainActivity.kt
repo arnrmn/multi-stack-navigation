@@ -13,42 +13,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        firstContainer.findNavController().apply {
-            graph = navInflater.inflate(R.navigation.nav_graph).apply {
-                startDestination = R.id.one
-            }
-        }
-
-        secondContainer.findNavController().apply {
-            graph = navInflater.inflate(R.navigation.nav_graph).apply {
-                startDestination = R.id.two
-            }
-        }
-
-        navigationBar.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.firstContainer -> showFirst()
-                R.id.secondContainer -> showSecond()
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
-
-        showFirst()
-    }
-
-    private fun showFirst() {
-        supportFragmentManager.beginTransaction()
-            .hide(secondContainer)
-            .show(firstContainer)
-            .commit()
-    }
-
-    private fun showSecond() {
-        supportFragmentManager.beginTransaction()
-            .hide(firstContainer)
-            .show(secondContainer)
-            .commit()
+        multiNavContainer.addBranch(R.navigation.first_nav)
+        multiNavContainer.addBranch(R.navigation.second_nav)
     }
 
     override fun onBackPressed() {
