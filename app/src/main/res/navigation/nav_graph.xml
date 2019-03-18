@@ -31,8 +31,6 @@
             app:argType="integer"/>
     </fragment>
 
-    <include app:graph="@id/first_nav_graph"/>
-
     <action
         android:id="@+id/toDetails"
         app:destination="@id/details"
