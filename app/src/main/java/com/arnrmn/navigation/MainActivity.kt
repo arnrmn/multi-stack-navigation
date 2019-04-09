@@ -15,6 +15,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!navigator.navigateUp()) super.onBackPressed()
+        if (!navigator.onBackPressed()) super.onBackPressed()
     }
 }

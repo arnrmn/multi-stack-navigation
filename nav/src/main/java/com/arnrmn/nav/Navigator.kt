@@ -10,6 +10,8 @@ class Navigator(
     @IdRes private val containerViewId: Int,
     private val fragmentManager: FragmentManager
 ) {
+
+    //todo add multiple graphs at one go
     fun addGraph(@NavigationRes graphId: Int, startDestinationArgs: Bundle? = null) {
         val host = NavHostFragment.create(graphId, startDestinationArgs)
         fragmentManager.beginTransaction()
@@ -18,7 +20,10 @@ class Navigator(
             .commit()
     }
 
-    fun swichTo(@NavigationRes graphId: Int) {
+    /**
+     * Shows navigation host fragment with provided graph id if such exists.
+     * */
+    fun show(@NavigationRes graphId: Int) {
         val visible = getVisible()
         val target = getHost(graphId)
         if (target != null && visible != target) {
@@ -29,7 +34,10 @@ class Navigator(
         }
     }
 
-    fun navigateUp(): Boolean =
+    /**
+     * Returns true when consumes back button click, false otherwise.
+     */
+    fun onBackPressed(): Boolean =
         getVisible()?.navController?.navigateUp() ?: false
 
     private fun getHost(@NavigationRes graphId: Int): NavHostFragment? =
