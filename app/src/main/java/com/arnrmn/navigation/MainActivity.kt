@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigator.addGraph(R.navigation.second_nav)
+        navigator.addGraph(R.navigation.first_nav)
     }
 
     override fun onBackPressed() {

@@ -14,7 +14,6 @@ class Navigator(
         val host = NavHostFragment.create(graphId, startDestinationArgs)
         fragmentManager.beginTransaction()
             .add(containerViewId, host, graphId.toString())
-            .show(host)
             .also { transaction -> getVisible()?.let { host -> transaction.hide(host) } }
             .commit()
     }
@@ -30,9 +29,8 @@ class Navigator(
         }
     }
 
-    fun navigateUp(): Boolean {
-        return getVisible()?.navController?.navigateUp() ?: false
-    }
+    fun navigateUp(): Boolean =
+        getVisible()?.navController?.navigateUp() ?: false
 
     private fun getHost(@NavigationRes graphId: Int): NavHostFragment? =
         fragmentManager.findFragmentByTag(graphId.toString()) as? NavHostFragment
