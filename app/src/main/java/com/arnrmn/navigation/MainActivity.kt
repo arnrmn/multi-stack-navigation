@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.arnrmn.nav.Graph
 import com.arnrmn.nav.Navigator
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val navigator: Navigator by lazy { Navigator(R.id.navigationContainer, supportFragmentManager) }
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
             Graph(R.navigation.first_nav),
             Graph(R.navigation.second_nav)
         )
+
+        navigationBar.setOnNavigationItemSelectedListener { item -> navigator.show(item.itemId) }
     }
 
     override fun onBackPressed() {
