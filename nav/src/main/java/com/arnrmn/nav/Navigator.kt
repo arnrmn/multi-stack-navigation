@@ -9,7 +9,9 @@ class Navigator(
     @IdRes private val containerViewId: Int,
     private val fragmentManager: FragmentManager
 ) {
+    private val listeners = mutableListOf<(Int) -> Unit>()
     private var mainGraph: Int = NOT_SET
+    private var visibleGraph: Int = NOT_SET
 
     fun initNavigation(vararg graphs: Graph) {
         fragmentManager.beginTransaction()
@@ -19,17 +21,22 @@ class Navigator(
                     transaction.add(containerViewId, host, graph.graphId.toString())
                     if (index == 0) {
                         mainGraph = graph.graphId
+                        visibleGraph = graph.graphId
                         transaction.show(host)
                     } else {
                         transaction.hide(host)
                     }
                 }
-            }.commit()
+            }
+            .setReorderingAllowed(true)
+            .commit()
     }
 
     /**
      * Shows navigation host fragment with provided graph id if such exists.
+     * @return true if transaction commit was executed, false otherwise.
      */
+    //todo notify listeners
     fun show(@NavigationRes graphId: Int): Boolean {
         val visible = getVisible()
         val target = getHost(graphId)
@@ -37,6 +44,9 @@ class Navigator(
             fragmentManager.beginTransaction()
                 .show(target)
                 .also { transaction -> if (visible != null) transaction.hide(visible) }
+                .setReorderingAllowed(true)
+                .runOnCommit { visibleGraph = graphId }
+                .runOnCommit { listeners.forEach { action -> action(graphId) } }
                 .commit()
             true
         } else {
@@ -59,13 +69,25 @@ class Navigator(
         } ?: false
     }
 
-    private fun getHost(@NavigationRes graphId: Int): NavHostFragment? =
-        fragmentManager.findFragmentByTag(graphId.toString()) as? NavHostFragment
+    fun addTopGraphChangeListener(listener: (Int) -> Unit) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener)
+        }
+    }
 
-    private fun getVisible(): NavHostFragment? =
-        fragmentManager.fragments
+    fun getVisibleGraphId(): Int = visibleGraph
+
+    fun getMainGraphId(): Int = mainGraph
+
+    private fun getHost(@NavigationRes graphId: Int): NavHostFragment? {
+        return fragmentManager.findFragmentByTag(graphId.toString()) as? NavHostFragment
+    }
+
+    private fun getVisible(): NavHostFragment? {
+        return fragmentManager.fragments
             .filterIsInstance<NavHostFragment>()
             .firstOrNull(NavHostFragment::isVisible)
+    }
 
     companion object {
         private const val NOT_SET = -1

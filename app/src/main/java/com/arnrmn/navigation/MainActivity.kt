@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
             Graph(R.navigation.second_nav)
         )
 
+        navigator.addTopGraphChangeListener { graphId -> navigationBar.selectedItemId = graphId }
         navigationBar.setOnNavigationItemSelectedListener { item -> navigator.show(item.itemId) }
     }
 
